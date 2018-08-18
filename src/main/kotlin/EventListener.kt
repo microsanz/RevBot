@@ -2,6 +2,7 @@ import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedE
 import sx.blah.discord.api.events.EventSubscriber
 import sx.blah.discord.handle.impl.events.user.PresenceUpdateEvent
 import sx.blah.discord.handle.obj.StatusType
+import sx.blah.discord.util.MessageBuilder
 
 
 class EventListener {
@@ -12,9 +13,13 @@ class EventListener {
             if (!event.author.isBot) {
                 val message =event.message.content
                 if (message.toUpperCase() == BotUtils.BOT_PREFIX + "LISTCHANNELS") {
+                    var channelListString=""
                     for (channel in event.guild.channels) {
-                        BotUtils.sendMessage(event.channel, channel.name)
+                        channelListString+=channel.name+"\n"
+
                     }
+                    BotUtils.sendMessage(event.channel, channelListString.trim().trimIndent())
+                        BotUtils.sendMessage(event.client.channels[0],MessageBuilder(event.client).withQuote(channelListString.trim().trimIndent()).content)
                 } else if (message.toUpperCase() == BotUtils.BOT_PREFIX + "PURGE") {
                     event.channel.bulkDelete()
                 } else {
@@ -30,8 +35,9 @@ class EventListener {
     @EventSubscriber
     fun onAuthorPresence(event: PresenceUpdateEvent) {
         if (!event.user.isBot && event.newPresence.status == StatusType.ONLINE) {
-//            BotUtils.sendMessage(event.client.channels[0].name)
+            BotUtils.sendMessage(event.client.channels[0],"Hi "+event.user.mention())
         }
 
     }
+
 }
