@@ -10,12 +10,16 @@ sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    maven { url "https://dl.bintray.com/kotlin/exposed" } // for kotlin exposed only not jcenter() here.
 }
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     compile group: 'com.discord4j', name: 'Discord4J', version: '2.10.1'
 //    compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.25'
+    compile 'org.jetbrains.exposed:exposed:0.10.4'
+    // https://mvnrepository.com/artifact/mysql/mysql-connector-java
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.12'
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
